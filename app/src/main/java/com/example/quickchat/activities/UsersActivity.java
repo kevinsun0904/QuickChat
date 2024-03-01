@@ -2,12 +2,14 @@ package com.example.quickchat.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.quickchat.R;
 import com.example.quickchat.adapters.UsersAdapter;
 import com.example.quickchat.databinding.ActivityUsersBinding;
+import com.example.quickchat.listeners.UserListener;
 import com.example.quickchat.models.User;
 import com.example.quickchat.utilities.Constants;
 import com.example.quickchat.utilities.PreferenceManager;
@@ -17,7 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity {
+public class UsersActivity extends AppCompatActivity implements UserListener {
 
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
@@ -60,7 +62,7 @@ public class UsersActivity extends AppCompatActivity {
                         }
 
                         if (!users.isEmpty()) {
-                            UsersAdapter usersAdapter = new UsersAdapter(users);
+                            UsersAdapter usersAdapter = new UsersAdapter(users, this);
                             binding.userRecyclerView.setAdapter(usersAdapter);
                             binding.userRecyclerView.setVisibility(View.VISIBLE);
                         }
@@ -86,5 +88,13 @@ public class UsersActivity extends AppCompatActivity {
         else {
             binding.progressBar.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @Override
+    public void onUserClicked(User user) {
+        Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Constants.KEY_USER, user);
+        startActivity(intent);
+        finish();
     }
 }
