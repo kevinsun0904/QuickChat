@@ -1,12 +1,9 @@
 package com.example.quickchat.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.quickchat.R;
 import com.example.quickchat.adapters.UsersAdapter;
 import com.example.quickchat.databinding.ActivityUsersBinding;
 import com.example.quickchat.listeners.UserListener;
@@ -19,7 +16,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersActivity extends AppCompatActivity implements UserListener {
+public class UsersActivity extends BaseActivity implements UserListener {
 
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
