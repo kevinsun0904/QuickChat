@@ -1,12 +1,16 @@
 package com.example.quickchat.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import com.example.quickchat.adapters.RecentConversationsAdapter;
 import com.example.quickchat.databinding.ActivityMainBinding;
@@ -36,6 +40,8 @@ public class MainActivity extends BaseActivity implements ConversationListener {
     private RecentConversationsAdapter conversationsAdapter;
     private FirebaseFirestore database;
 
+    private static final int PERMISSION_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +53,7 @@ public class MainActivity extends BaseActivity implements ConversationListener {
         getToken();
         setListeners();
         listenConversations();
+        askPermission();
     }
 
     private void init() {
@@ -165,5 +172,15 @@ public class MainActivity extends BaseActivity implements ConversationListener {
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
         intent.putExtra(Constants.KEY_USER, user);
         startActivity(intent);
+    }
+
+    public void askPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    PERMISSION_CODE
+            );
+        }
     }
 }
