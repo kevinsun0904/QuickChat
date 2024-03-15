@@ -22,7 +22,7 @@
         android:src="@drawable/ic_unread_message"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/imageProfile"
-        app:layout_constraintLeft_toLeftOf="@id/imageProfile"/>
+        app:layout_constraintRight_toRightOf="@id/imageProfile"/>
 
 
     <View
