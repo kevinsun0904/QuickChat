@@ -10,4 +10,5 @@
     <color name="error">#B00020</color>
     <color name="received_message_background">#090D16</color>
     <color name="green">#008000</color>
+    <color name="unread_message">#800020</color>
 </resources>

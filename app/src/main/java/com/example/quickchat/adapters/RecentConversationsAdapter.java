@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import com.example.quickchat.databinding.ItemContainerRecentConversationBinding;
 import com.example.quickchat.listeners.ConversationListener;
 import com.example.quickchat.models.ChatMessage;
 import com.example.quickchat.models.User;
+import com.example.quickchat.utilities.Constants;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -61,6 +64,16 @@ public class RecentConversationsAdapter extends RecyclerView.Adapter<RecentConve
             binding.imageProfile.setImageBitmap(getConversationImage(chatMessage.conversationImage));
             binding.textName.setText(chatMessage.conversationName);
             binding.textRecentMessage.setText(chatMessage.message);
+
+            if (chatMessage.lastAccessed == null || chatMessage.lastAccessed.compareTo(chatMessage.dateObject) < 0) {
+                // set red dot
+                binding.unreadMessage.setVisibility(View.VISIBLE);
+            }
+            else {
+                // remove red dot
+                binding.unreadMessage.setVisibility(View.GONE);
+            }
+
             binding.getRoot().setOnClickListener(v -> {
                 User user = new User();
                 user.id = chatMessage.conversationId;

@@ -142,7 +142,7 @@ public class ChatActivity extends BaseActivity {
                             JSONArray results = responseJson.getJSONArray("results");
                             if (responseJson.getInt("failure") == 1) {
                                 JSONObject error = (JSONObject) results.get(0);
-                                showToast(error.getString("error"));
+                                //showToast(error.getString("error"));
                                 return;
                             }
                         }
@@ -254,7 +254,15 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void setListeners() {
-        binding.imageBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        binding.imageBack.setOnClickListener(v -> {
+            /*
+            database.collection(Constants.KEY_COLLECTION_CONVERSATION_TIME)
+                    .document(preferenceManager.getString(Constants.KEY_USER_ID))
+                    .update(preferenceManager.getString(Constants.KEY_RECEIVER_ID), new Date())
+                    .addOnFailureListener(e -> showToast(e.getMessage()));
+             */
+            getOnBackPressedDispatcher().onBackPressed();
+        });
         binding.layoutSend.setOnClickListener(v -> sendMessage());
     }
 

@@ -3,6 +3,7 @@ package com.example.quickchat.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.quickchat.adapters.UsersAdapter;
 import com.example.quickchat.databinding.ActivityUsersBinding;
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UsersActivity extends BaseActivity implements UserListener {
@@ -90,9 +92,19 @@ public class UsersActivity extends BaseActivity implements UserListener {
 
     @Override
     public void onUserClicked(User user) {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_CONVERSATION_TIME)
+                .document(preferenceManager.getString(Constants.KEY_USER_ID))
+                .update(user.id, new Date())
+                .addOnFailureListener(e -> showToast(e.getMessage()));
+
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
         intent.putExtra(Constants.KEY_USER, user);
         startActivity(intent);
         finish();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
