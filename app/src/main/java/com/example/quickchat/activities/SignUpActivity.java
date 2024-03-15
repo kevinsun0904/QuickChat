@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.quickchat.databinding.ActivitySignUpBinding;
+import com.example.quickchat.encryption.SHA256;
 import com.example.quickchat.utilities.Constants;
 import com.example.quickchat.utilities.PreferenceManager;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -64,7 +66,13 @@ public class SignUpActivity extends AppCompatActivity {
         HashMap<String, Object> user = new HashMap<>();
         user.put(Constants.KEY_NAME, binding.inputName.getText().toString());
         user.put(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
-        user.put(Constants.KEY_PASSWORD, binding.inputPassword.getText().toString());
+        try {
+            user.put(Constants.KEY_PASSWORD, SHA256.toHexString(SHA256.getSHA(binding.inputPassword.getText().toString())));
+        }
+        catch (NoSuchAlgorithmException e) {
+            showToast("Error");
+            return;
+        }
         user.put(Constants.KEY_IMAGE, encodedImage);
         database.collection(Constants.KEY_COLLECTION_USERS)
                 .add(user)
