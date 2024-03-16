@@ -117,11 +117,13 @@ public class MainActivity extends BaseActivity implements ConversationListener {
                                         chatMessage.conversationImage = documentChange.getDocument().getString(Constants.KEY_RECEIVER_IMAGE);
                                         chatMessage.conversationName = documentChange.getDocument().getString(Constants.KEY_RECEIVER_NAME);
                                         chatMessage.conversationId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
+                                        chatMessage.conversationEmail = documentChange.getDocument().getString(Constants.KEY_RECEIVER_EMAIL);
                                     }
                                     else {
                                         chatMessage.conversationImage = documentChange.getDocument().getString(Constants.KEY_SENDER_IMAGE);
                                         chatMessage.conversationName = documentChange.getDocument().getString(Constants.KEY_SENDER_NAME);
                                         chatMessage.conversationId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
+                                        chatMessage.conversationEmail = documentChange.getDocument().getString(Constants.KEY_SENDER_EMAIL);
                                     }
                                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_LAST_MESSAGE);
                                     chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
@@ -138,9 +140,8 @@ public class MainActivity extends BaseActivity implements ConversationListener {
                                         if (conversations.get(i).senderId.equals(senderId) && conversations.get(i).receiverId.equals(receiverId)) {
                                             conversations.get(i).message = documentChange.getDocument().getString(Constants.KEY_LAST_MESSAGE);
                                             conversations.get(i).dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
-                                            int finalI = i;
                                             DocumentSnapshot documentSnapshot = task.getResult();
-                                            conversations.get(finalI).lastAccessed = documentSnapshot.getDate(conversations.get(finalI).conversationId);
+                                            conversations.get(i).lastAccessed = documentSnapshot.getDate(conversations.get(i).conversationId);
                                             break;
                                         }
                                     }
@@ -196,7 +197,7 @@ public class MainActivity extends BaseActivity implements ConversationListener {
                 chatMessage.lastAccessed = new Date();
                 database.collection(Constants.KEY_COLLECTION_CONVERSATION_TIME)
                         .document(preferenceManager.getString(Constants.KEY_USER_ID))
-                        .update(user.id, new Date())
+                        .update(user.id, chatMessage.lastAccessed)
                         .addOnFailureListener(e -> showToast(e.getMessage()));
             }
         }

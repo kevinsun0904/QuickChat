@@ -81,6 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
                     preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
                     preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
                     preferenceManager.putString(Constants.KEY_NAME, binding.inputName.getText().toString());
+                    preferenceManager.putString(Constants.KEY_EMAIL, binding.inputEmail.getText().toString());
                     preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
 
                     database.collection(Constants.KEY_COLLECTION_CONVERSATION_TIME)

@@ -93,9 +93,11 @@ public class ChatActivity extends BaseActivity {
             conversation.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
             conversation.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
             conversation.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getString(Constants.KEY_IMAGE));
+            conversation.put(Constants.KEY_SENDER_EMAIL, preferenceManager.getString(Constants.KEY_EMAIL));
             conversation.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
             conversation.put(Constants.KEY_RECEIVER_NAME, receiverUser.name);
             conversation.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.image);
+            conversation.put(Constants.KEY_RECEIVER_EMAIL, receiverUser.email);
             conversation.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
             conversation.put(Constants.KEY_TIMESTAMP, new Date());
             addConversation(conversation);
@@ -251,19 +253,18 @@ public class ChatActivity extends BaseActivity {
     private void loadReceiverDetails() {
         receiverUser = (User) getIntent().getSerializableExtra(Constants.KEY_USER);
         binding.textName.setText(receiverUser.name);
+        binding.textInfoName.setText(receiverUser.name);
+        binding.textInfoEmail.setText(receiverUser.email);
+        byte[] bytes = Base64.decode(receiverUser.image,Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        binding.imageProfile.setImageBitmap(bitmap);
     }
 
     private void setListeners() {
-        binding.imageBack.setOnClickListener(v -> {
-            /*
-            database.collection(Constants.KEY_COLLECTION_CONVERSATION_TIME)
-                    .document(preferenceManager.getString(Constants.KEY_USER_ID))
-                    .update(preferenceManager.getString(Constants.KEY_RECEIVER_ID), new Date())
-                    .addOnFailureListener(e -> showToast(e.getMessage()));
-             */
-            getOnBackPressedDispatcher().onBackPressed();
-        });
+        binding.imageBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
+        binding.imageInfo.setOnClickListener(v -> binding.infoPage.setVisibility(View.VISIBLE));
+        binding.imageClose.setOnClickListener(v -> binding.infoPage.setVisibility(View.GONE));
     }
 
     private String getReadableDateTime(Date date) {

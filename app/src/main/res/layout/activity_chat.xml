@@ -156,4 +156,72 @@
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/viewSupporter"/>
 
+    <FrameLayout
+        android:id="@+id/infoPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC262626"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/infoBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <View
+                android:layout_width="@dimen/_240sdp"
+                android:layout_height="@dimen/_240sdp"
+                android:background="@drawable/background_content_middle" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageClose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close"
+                app:tint="@color/primary"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_200sdp" />
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:background="@drawable/background_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_45sdp"
+                android:scaleType="centerCrop"
+                app:riv_oval="true" />
+
+            <TextView
+                android:id="@+id/textInfoName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_140sdp"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_25ssp"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+            <TextView
+                android:id="@+id/textInfoEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_170sdp"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/_15ssp"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="1" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
